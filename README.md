@@ -1,5 +1,7 @@
 # missive
 
+![Codeship badge](https://codeship.com/projects/592ed060-04cc-0134-279c-666d98438954/status?branch=master)
+
 Fast, lightweight library for encoding and decoding JSON messages over streams.
 
 This is mainly intended for TCP applications, where the concept of messages
