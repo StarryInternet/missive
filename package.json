@@ -1,0 +1,36 @@
+{
+  "name": "missive",
+  "version": "1.0.0",
+  "description": "Fast, lightweight library for encoding and decoding JSON messages over streams.",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StarryInternet/missive"
+  },
+  "bugs": {
+    "url": "https://github.com/StarryInternet/missive/issues"
+  },
+  "homepage": "https://github.com/StarryInternet/missive",
+  "devDependencies": {
+    "chai": "2.3.0",
+    "eslint-config-starry": "2.0.0",
+    "eslint-plugin-starry": "2.0.0",
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-contrib-jshint": "0.11.2",
+    "grunt-contrib-watch": "0.6.1",
+    "grunt-eslint": "18.1.0",
+    "grunt-mocha-istanbul": "2.4.0",
+    "hapi": "10.0.0",
+    "istanbul": "0.4.0",
+    "jshint-stylish": "1.0.2",
+    "load-grunt-tasks": "3.1.0",
+    "mocha": "2.2.5",
+    "rewire": "2.3.3"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "grunt"
+  },
+  "main": "index.js"
+}
