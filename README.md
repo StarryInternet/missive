@@ -9,13 +9,16 @@ doesn't really exist.
 
 ### How it works
 
-Rather than simply using newlines to delimit messages, `missive` uses the 
+Rather than simply using newlines to delimit messages, `missive` uses the
 time-honored tradition of length prefixing. We think this is safer, and it
 can also be quite a bit faster in certain situations.
 
 ### Examples
 
 ##### Piping data
+
+`missive` exports just two functions, `encode()` and `parse()`. Each returns
+an instance of `Stream.Transform`.
 
 Both streams pipe `Buffer` instances on the way out (like pretty much
 all streams), but `encode` expects on object to be passed to `write`.
@@ -70,7 +73,7 @@ encode.write({ foo: 'bar' });
 
 ```js
 let net = require('net');
-let missive = require('missive')p;
+let missive = require('missive');
 let server = net.createServer();
 
 server.listen( 1337 );
@@ -93,3 +96,16 @@ client.pipe( missive.parse() ).on( 'message', function( obj ) {
   console.log( obj ); // { hello: 'world' }
 });
 ```
+
+### Spec
+
+In case you can't use `missive` on one side of a socket, this is
+how it encodes data:
+
+1. Let `data` be the result of `JSON.stringify( object ) + '\n'`.
+2. Let `header` be the string `'JSON'` as an UInt32LE (`1313821514`).
+3. Let `byteLength` be the byte length of `data` as utf-8.
+4. Let `buffer` be a new buffer of length `byteLength + 8`.
+5. Write `header` at byte offset `0` of `buffer` as a UInt32LE.
+6. Write `byteLength` at byte offset `4` of `buffer` as a UInt32LE.
+7. Write `data` at byte offset `8` of `buffer` as a utf-8 string.
