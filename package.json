@@ -1,8 +1,8 @@
 {
   "name": "missive",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Fast, lightweight library for encoding and decoding JSON messages over streams.",
-  "keywords": [],
+  "keywords": [ "json", "stream", "streams", "streaming", "tcp" ],
   "repository": {
     "type": "git",
     "url": "https://github.com/StarryInternet/missive"
@@ -29,6 +29,17 @@
     "rewire": "2.3.3"
   },
   "dependencies": {},
+  "license": "MIT",
+  "author": "Kevin Ennis <kennis84@gmail.com> (https://twitter.com/kevincennis)",
+  "contributors": [
+    {
+      "name": "Kevin Ennis"
+    },
+    {
+      "name": "Stephen Murray"
+    }
+  ],
+  "engines": { "node": ">=4.0.0" },
   "scripts": {
     "test": "grunt"
   },
