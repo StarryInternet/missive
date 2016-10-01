@@ -7,6 +7,12 @@ Fast, lightweight library for encoding and decoding JSON messages over streams.
 This is mainly intended for TCP applications, where the concept of messages
 doesn't really exist.
 
+### Installing
+
+```
+npm install --save missive
+```
+
 ### How it works
 
 Rather than simply using newlines to delimit messages, `missive` uses the
