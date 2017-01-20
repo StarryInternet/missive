@@ -1,6 +1,6 @@
 {
   "name": "missive",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Fast, lightweight library for encoding and decoding JSON messages over streams.",
   "keywords": [
     "json",
