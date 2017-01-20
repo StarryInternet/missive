@@ -18,18 +18,6 @@ describe( 'Parser', function() {
       chai.assert.instanceOf( parser, Transform );
     });
 
-    it( 'should emit `message` on `data`', function( done ) {
-      var Parser = require('rewire')('../../lib/parser'),
-        parser = new Parser();
-
-      parser.on( 'message', function( obj ) {
-        chai.assert.isObject( obj );
-        chai.assert.equal( obj.foo, 'bar' );
-        done();
-      });
-      parser.emit( 'data', new Buffer('{"foo":"bar"}') );
-    });
-
   });
 
   describe( '#_transform', function() {
@@ -228,6 +216,71 @@ describe( 'Parser', function() {
       parser.on( 'message', function( msg ) {
         chai.assert.equal( msg.foo, 'bar' );
         done();
+      });
+
+      encoder.write( obj );
+    });
+
+    // write a message into Parser before binding a `message` handler
+    // and make sure that it's there waiting for us
+    //
+    // missive previously suffered from an issue where messages written
+    // prior to a `data`/`message` handler being bound would essentially be
+    // thrown away
+    it( 'should buffer until a message handler is bound', function( done ) {
+      var Parser = require('rewire')('../../lib/parser'),
+        Encoder = require('rewire')('../../lib/encoder'),
+        parser = new Parser(),
+        encoder = new Encoder(),
+        obj1 = { foo: 'bar' },
+        obj2 = { baz: 'bing' };
+
+      encoder.on( 'data', function( chunk ) {
+        parser.write( chunk );
+
+        // write happens asynchronously, so we need to wait
+        // for the data to become readable
+        setImmediate( () => {
+          let msg1 = parser.read();
+
+          chai.assert.isNotNull( msg1, 'message was not buffered while waiting for a handler to be bound' );
+
+          msg1 = JSON.parse( msg1.toString('utf8') );
+
+          parser.on( 'message', () => {
+            let buffered = parser.read();
+            chai.assert.isNull( buffered, 'stream buffer was not exhausted after `message` was emitted' );
+            done();
+          });
+
+          encoder.write( obj2 );
+        });
+      });
+
+      encoder.write( obj1 );
+    });
+
+    // messages should *not* be buffered if a `message` handler is bound
+    it( 'should not buffer while a message handler is bound', function( done ) {
+      var Parser = require('rewire')('../../lib/parser'),
+        Encoder = require('rewire')('../../lib/encoder'),
+        parser = new Parser(),
+        encoder = new Encoder(),
+        obj = { foo: 'bar' };
+
+      encoder.on( 'data', function( chunk ) {
+        parser.write( chunk );
+
+        parser.on( 'message', () => {} );
+
+        // write happens asynchronously, so we need to wait
+        // for the data to become readable
+        setImmediate( () => {
+          let msg = parser.read();
+
+          chai.assert.isNull( msg, 'stream buffer was not cleared' );
+          done();
+        });
       });
 
       encoder.write( obj );
