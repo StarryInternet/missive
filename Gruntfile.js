@@ -10,7 +10,9 @@ module.exports = function( grunt ) {
     // mocha tests
     mocha_istanbul: require('./build/config/mocha'),
     // watch config
-    watch: require('./build/config/watch')
+    watch: require('./build/config/watch'),
+    // benchmark config
+    benchmark: require('./build/config/benchmark')
   });
 
   // load npm plugins (all dependencies that match /^grunt/)
