@@ -286,6 +286,29 @@ describe( 'Parser', function() {
       encoder.write( obj );
     });
 
+    it( 'should emit `end` when `null` is pushed', function( done ) {
+      var Parser = require('rewire')('../../lib/parser'),
+        Encoder = require('rewire')('../../lib/encoder'),
+        parser = new Parser(),
+        encoder = new Encoder(),
+        obj = { foo: 'bar' };
+
+      // bind a message to make sure we trigger the null check
+      parser.on( 'message', () => {} );
+
+      encoder.on( 'data', function( chunk ) {
+        parser.on( 'end', () => {
+          chai.assert.ok( true );
+          done();
+        });
+
+        parser.write( chunk );
+        parser.push( null );
+      });
+
+      encoder.write( obj );
+    });
+
   });
 
 });
