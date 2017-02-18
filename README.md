@@ -103,6 +103,27 @@ client.pipe( missive.parse() ).on( 'message', function( obj ) {
 });
 ```
 
+##### Compression
+
+To enable Node's `zlib` compression, instantiate an `encode` stream
+with `{ deflate: true }` and a `parse` stream with `{ inflate: true }`
+
+Note that this will incur a fairly substantial performance penalty, so
+compression is only advised in situations where message volume is low
+and saving bytes over the wire is critical.
+
+```js
+let missive = require('missive');
+let encode = missive.encode({ deflate: true });
+let parse = missive.parse({ inflate: true });
+
+parse.on( 'message', function( obj ) {
+  console.log( obj.foo ); // 'bar'
+});
+
+encode.write({ foo: 'bar' });
+```
+
 ### Spec
 
 In case you can't use `missive` on one side of a socket, this is

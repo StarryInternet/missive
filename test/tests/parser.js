@@ -39,6 +39,23 @@ describe( 'Parser', function() {
       encoder.write( obj );
     });
 
+    it( 'should deflate/inflate messages', function( done ) {
+      var Parser = require('rewire')('../../lib/parser'),
+        Encoder = require('rewire')('../../lib/encoder'),
+        parser = new Parser({ inflate: true }),
+        encoder = new Encoder({ deflate: true }),
+        obj = { foo: 'bar' };
+
+      encoder.pipe( parser ).on( 'message', function( msg ) {
+        chai.assert.equal( msg.foo, 'bar' );
+        // make sure it didn't just pass me back the same actual object
+        chai.assert.notEqual( msg, obj );
+        done();
+      });
+
+      encoder.write( obj );
+    });
+
     it( 'should accept strings', function( done ) {
       var Parser = require('rewire')('../../lib/parser'),
         Encoder = require('rewire')('../../lib/encoder'),
