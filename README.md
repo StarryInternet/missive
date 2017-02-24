@@ -17,7 +17,18 @@ npm install --save missive
 
 Rather than simply using newlines to delimit messages, `missive` uses the
 time-honored tradition of length prefixing. We think this is safer, and it
-can also be quite a bit faster in certain situations.
+can also be quite a bit faster.
+
+Current benchmarks (`grunt benchmark:shootout` on a 2015 Macbook Pro):
+
+```
+Running suite Parsing Shootout [build/benchmarks/shootout.js]...
+>> missive x 344,303 ops/sec ±2.50% (79 runs sampled)
+>> json-stream x 2,816 ops/sec ±1.09% (33 runs sampled)
+>> ldjson-stream x 220,808 ops/sec ±5.12% (79 runs sampled)
+>> burro x 210,686 ops/sec ±5.21% (79 runs sampled)
+Fastest test is missive at 1.63x faster than burro and ldjson-stream
+```
 
 ### Examples
 
