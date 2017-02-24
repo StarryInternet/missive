@@ -27,7 +27,7 @@ can also be quite a bit faster in certain situations.
 an instance of `Stream.Transform`.
 
 Both streams pipe `Buffer` instances on the way out (like pretty much
-all streams), but `encode` expects on object to be passed to `write`.
+all streams), but `encode` expects an object to be passed to `write`.
 
 ```js
 let missive = require('missive');
@@ -50,7 +50,7 @@ let missive = require('missive');
 let encode = missive.encode();
 let parse = missive.parse();
 
-parse.on( 'data', function( buffer ) {
+parse.on( 'data', buffer => {
   console.log( buffer instanceof Buffer ); // true
 });
 
@@ -68,7 +68,7 @@ let missive = require('missive');
 let encode = missive.encode();
 let parse = missive.parse();
 
-parse.on( 'message', function( obj ) {
+parse.on( 'message', obj => {
   console.log( obj.foo ); // 'bar'
 });
 
@@ -84,7 +84,7 @@ let server = net.createServer();
 
 server.listen( 1337 );
 
-server.on( 'connection', function( socket ) {
+server.on( 'connection', socket => {
   let encode = missive.encode();
   encode.pipe( socket );
   encode.write({ hello: 'world' });
@@ -98,7 +98,7 @@ let net = require('net');
 let missive = require('missive');
 let client = net.createConnection({ port: 1337 });
 
-client.pipe( missive.parse() ).on( 'message', function( obj ) {
+client.pipe( missive.parse() ).on( 'message', obj => {
   console.log( obj ); // { hello: 'world' }
 });
 ```
@@ -117,7 +117,7 @@ let missive = require('missive');
 let encode = missive.encode({ deflate: true });
 let parse = missive.parse({ inflate: true });
 
-parse.on( 'message', function( obj ) {
+parse.on( 'message', obj => {
   console.log( obj.foo ); // 'bar'
 });
 
