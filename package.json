@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/StarryInternet/missive",
   "devDependencies": {
+    "burro": "0.4.13",
     "chai": "2.3.0",
     "eslint-config-starry": "2.0.0",
     "eslint-plugin-starry": "2.0.0",
@@ -31,6 +32,8 @@
     "hapi": "10.0.0",
     "istanbul": "0.4.0",
     "jshint-stylish": "1.0.2",
+    "json-stream": "1.0.0",
+    "ldjson-stream": "1.2.1",
     "load-grunt-tasks": "3.1.0",
     "mocha": "2.2.5",
     "rewire": "2.3.3"

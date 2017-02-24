@@ -9,9 +9,8 @@ encoder.write( data );
 
 let msg = encoder.read();
 
-// make sure the stream isn't paused so that it
-// won't buffer all these messages
-parser.resume();
+// make sure we pay for JSON parsing to make this fair
+parser.on( 'message', () => {} );
 
 module.exports = {
   name: 'Parse',
