@@ -4,8 +4,7 @@
 
 Fast, lightweight library for encoding and decoding JSON messages over streams.
 
-This is mainly intended for TCP applications, where the concept of messages
-doesn't really exist.
+Built using [fringe](https://github.com/StarryInternet/fringe)
 
 ### Installing
 
@@ -18,17 +17,6 @@ npm install --save missive
 Rather than simply using newlines to delimit messages, `missive` uses the
 time-honored tradition of length prefixing. We think this is safer, and it
 can also be quite a bit faster.
-
-Current benchmarks (`grunt benchmark:shootout` on a 2015 Macbook Pro):
-
-```
-Running suite Parsing Shootout [build/benchmarks/shootout.js]...
->> missive x 344,303 ops/sec ±2.50% (79 runs sampled)
->> json-stream x 2,816 ops/sec ±1.09% (33 runs sampled)
->> ldjson-stream x 220,808 ops/sec ±5.12% (79 runs sampled)
->> burro x 210,686 ops/sec ±5.21% (79 runs sampled)
-Fastest test is missive at 1.63x faster than burro and ldjson-stream
-```
 
 ### Examples
 
@@ -141,7 +129,7 @@ In case you can't use `missive` on one side of a socket, this is
 how it encodes data:
 
 1. Let `data` be the result of `JSON.stringify( object ) + '\n'`.
-2. Let `header` be the string `'JSON'` as an UInt32LE (`1313821514`).
+2. Let `header` be the string `'JSON'` as a utf-8 string.
 3. Let `byteLength` be the byte length of `data` as utf-8.
 4. Let `buffer` be a new buffer of length `byteLength + 8`.
 5. Write `header` at byte offset `0` of `buffer` as a UInt32LE.
