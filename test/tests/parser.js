@@ -12,7 +12,7 @@ describe( 'Parser', function() {
 
     it( 'should inherit from stream.Transform', function() {
       var Parser = require('rewire')('../../lib/parser'),
-        Transform = Parser.__get__('Transform'),
+        Transform = require('stream').Transform,
         parser = new Parser();
 
       chai.assert.instanceOf( parser, Transform );

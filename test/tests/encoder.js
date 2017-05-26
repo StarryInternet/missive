@@ -12,7 +12,7 @@ describe( 'encoder', function() {
 
     it( 'should inherit from stream.Transform', function() {
       var Encoder = require('rewire')('../../lib/encoder'),
-        Transform = Encoder.__get__('Transform'),
+        Transform = require('stream').Transform,
         encoder = new Encoder();
 
       chai.assert.instanceOf( encoder, Transform );
@@ -28,9 +28,9 @@ describe( 'encoder', function() {
         obj = {foo: 'bar'};
 
       encoder.on( 'data', function( chunk ) {
-        var header = chunk.readUInt32LE( 0 ),
+        var header = chunk.toString( 'utf8', 0, 4 ),
           len = chunk.readUInt32LE( 4 );
-        chai.assert.equal( header, Encoder.HEADER );
+        chai.assert.equal( header, 'JSON' );
         chai.assert.equal( len, 14 );
         done();
       });

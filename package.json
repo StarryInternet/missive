@@ -38,7 +38,9 @@
     "mocha": "2.2.5",
     "rewire": "2.3.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "fringe": "1.0.0"
+  },
   "license": "MIT",
   "author": "Kevin Ennis <kennis84@gmail.com> (https://twitter.com/kevincennis)",
   "contributors": [
