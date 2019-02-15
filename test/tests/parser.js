@@ -56,6 +56,25 @@ describe( 'Parser', function() {
       encoder.write( obj );
     });
 
+    it( 'should emit error when inflating failed', function( done ) {
+      var Parser = require('rewire')('../../lib/parser'),
+        Encoder = require('rewire')('../../lib/encoder'),
+        // parser will inflate ...
+        parser = new Parser({ inflate: true }),
+        // ... but encoder don't deflate
+        encoder = new Encoder({ deflate: false }),
+        obj = { foo: 'bar' };
+
+      encoder.pipe( parser );
+
+      parser.on( 'error', function( err ) {
+        chai.assert.instanceOf( err, Error );
+        done();
+      });
+
+      encoder.write( obj );
+    });
+
     it( 'should accept strings', function( done ) {
       var Parser = require('rewire')('../../lib/parser'),
         Encoder = require('rewire')('../../lib/encoder'),
