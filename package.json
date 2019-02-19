@@ -1,6 +1,6 @@
 {
   "name": "missive",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Fast, lightweight library for encoding and decoding JSON messages over streams.",
   "keywords": [
     "json",
@@ -37,7 +37,7 @@
     "rewire": "2.5.2"
   },
   "dependencies": {
-    "fringe": "1.0.2"
+    "fringe": "1.1.1"
   },
   "license": "MIT",
   "author": "Kevin Ennis <kennis84@gmail.com> (https://twitter.com/kevincennis)",
